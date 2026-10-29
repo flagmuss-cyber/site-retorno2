@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retorno.by — Аргентинское танго | Открытие 15 декабря</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome для иконок соцсетей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Изящные шрифты: Cormorant Garamond для заголовков и Inter для текста -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#38BDF8',
+                            pink: '#F472B6',
+                            green: '#4ADE80',
+                            dark: '#0F172A',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 9s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(2deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Glassmorphism в гармонии голубого, розового и зеленого */
+        .glass {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(244, 114, 182, 0.35);
+            box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .glass-btn:hover {
+            background: rgba(244, 114, 182, 0.15);
+            border-color: rgba(244, 114, 182, 0.5);
+        }
+
+        /* Трехцветное мягкое свечение заголовка */
+        .glow-text {
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.9), 0 2px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #0F172A;
+            margin: 0;
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Градиентный оверлей: сочетание голубого, розового и зеленого */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.35) 0%, rgba(252, 231, 243, 0.3) 50%, rgba(220, 252, 231, 0.35) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col justify-between items-center relative overflow-y-auto selection:bg-pink-400 selection:text-white">
+
+    <!-- Canvas для плавных динамических частиц (движение танца в 3 цветах) -->
+    <canvas id="dance-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Теневые градиенты и размытые пятна (голубое, розовое, зеленое свечение) -->
+    <div class="fixed top-1/4 -left-32 w-[30rem] h-[30rem] bg-sky-300/40 rounded-full blur-[130px] animate-pulse-slow pointer-events-none"></div>
+    <div class="fixed top-1/2 left-1/3 w-[25rem] h-[25rem] bg-pink-300/30 rounded-full blur-[130px] animate-pulse-slow pointer-events-none" style="animation-delay: 1.5s;"></div>
+    <div class="fixed bottom-1/4 -right-32 w-[30rem] h-[30rem] bg-emerald-300/40 rounded-full blur-[130px] animate-pulse-slow pointer-events-none" style="animation-delay: 3s;"></div>
+
+    <!-- Грациозный полупрозрачный силуэт танцоров танго с розовато-зеленым градиентом -->
+    <div class="fixed right-8 bottom-0 opacity-20 pointer-events-none z-0 hidden lg:block animate-float">
+        <svg width="420" height="600" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 20C105 20 110 25 108 32C106 39 98 42 95 38C92 34 95 20 100 20Z" fill="url(#tango-grad)"/>
+            <path d="M95 40C85 55 70 80 75 110C80 140 105 160 110 200C115 240 90 280 85 290" stroke="url(#tango-grad)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M105 45C115 60 130 85 125 115C120 145 95 170 90 210C85 250 110 285 115 295" stroke="url(#tango-grad)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M80 75C100 70 120 80 135 72" stroke="url(#tango-grad)" stroke-width="2.5" stroke-linecap="round"/>
+            <defs>
+                <linearGradient id="tango-grad" x1="0" y1="0" x2="200" y2="300" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#EC4899"/>
+                    <stop offset="0.5" stop-color="#38BDF8"/>
+                    <stop offset="1" stop-color="#10B981" stop-opacity="0.4"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- Шапка / Логотип -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-8 flex justify-center items-center z-10">
+        <div class="text-2xl sm:text-4xl md:text-5xl font-serif font-bold tracking-widest text-slate-900 glow-text uppercase text-center leading-tight">
+            MINSK <span class="text-pink-500 font-normal">RETORNO</span>
+            <span class="block text-5xl sm:text-3xl md:text-4xl font-sans font-medium text-emerald-600 tracking-[0.25em] mt-1 normal-case">
+                7-9 may 2027
+            </span>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="w-full max-w-3xl px-4 py-6 z-10 my-auto text-center">
+        <!-- Карточка с эффектом стекловолокна -->
+        <div class="glass rounded-3xl p-6 sm:p-10 md:p-12 relative overflow-hidden">
+            <!-- Верхняя декоративная градиентная полоса (Голубой -> Розовый -> Зеленый) -->
+            <div class="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-sky-400 via-pink-400 to-emerald-400"></div>
+
+            <!-- Плашка даты открытия (сделана более заметной и крупной) -->
+            <div class="inline-flex flex-col items-center px-8 py-3.5 rounded-2xl bg-gradient-to-r from-sky-100/90 via-pink-100/90 to-emerald-100/90 border-2 border-pink-400/70 text-slate-900 mb-8 uppercase tracking-widest shadow-md backdrop-blur-md">
+                <span class="text-xs font-bold text-pink-600 tracking-[0.2em] mb-0.5">Начало регистрации</span>
+                <span class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">15 декабря</span>
+            </div>
+
+            <!-- Заголовок (уменьшен размер текста) -->
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-serif tracking-tight mb-6 text-slate-800 leading-snug">
+                Наше танго понятно без слов, оно окрыляет, стирает границы и оставляет только настоящее.
+            </h1>
+
+            <!-- Описание -->
+            <p class="text-base sm:text-lg text-slate-700 max-w-xl mx-auto mb-10 font-light leading-relaxed">
+                Minsk Retorno — место встречи старых и новых друзей, которых мы хорошо знаем, потому что каждый шаг — маленькая история.
+Уже этой весной Минск снова засияет на танго-карте. Тебя ждут незабываемые милонги, вдохновляющая атмосфера и музыка, от которой замирает сердце. Есть только здесь и сейчас.
+Приезжай.
+            </p>
+
+            <!-- Блок социальные сети -->
+            <div class="pt-6 border-t border-slate-200/80">
+                <p class="text-xs text-slate-600 uppercase tracking-widest mb-5 font-semibold">Следите за новостями в соцсетях</p>
+                <div class="flex justify-center items-center gap-4 flex-wrap">
+                    <!-- Telegram -->
+                    <a href="https://t.me/+9EWYZjtoJNg5MWZi" target="_blank" rel="noopener noreferrer" 
+                       class="w-12 h-12 rounded-2xl glass-btn flex items-center justify-center text-sky-500 hover:text-pink-500 hover:scale-110 transition-all duration-300 group shadow-sm"
+                       title="Telegram">
+                        <i class="fa-brands fa-telegram text-2xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/share/g/1FKGA2JeuY/" target="_blank" rel="noopener noreferrer" 
+                       class="w-12 h-12 rounded-2xl glass-btn flex items-center justify-center text-sky-600 hover:text-emerald-500 hover:scale-110 transition-all duration-300 group shadow-sm"
+                       title="Facebook">
+                        <i class="fa-brands fa-facebook-f text-xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+
+                    <!-- VK (ВКонтакте) -->
+                    <a href="https://vk.ru/club242666155" target="_blank" rel="noopener noreferrer" 
+                       class="w-12 h-12 rounded-2xl glass-btn flex items-center justify-center text-emerald-600 hover:text-pink-500 hover:scale-110 transition-all duration-300 group shadow-sm"
+                       title="VK">
+                        <i class="fa-brands fa-vk text-xl group-hover:scale-110 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал / Футер -->
+    <footer class="w-full max-w-7xl mx-auto px-6 py-6 text-center text-xs text-slate-700/80 z-10 font-medium">
+        <p>&copy; <span id="year"></span> retorno.by. Искусство аргентинского танго.</p>
+    </footer>
+
+    <!-- Скрипты -->
+    <script>
+        // Динамический год
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Интерактивный Canvas: частицы голубого, розового и зеленого цвета
+        const canvas = document.getElementById('dance-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        class DanceParticle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2.8 + 1;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.45 + 0.2;
+                // Цвета: голубой (sky), розовый (pink), зеленый (emerald/leaf)
+                const colors = ['56, 189, 248', '244, 114, 182', '52, 211, 153', '255, 255, 255'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.angle += (Math.random() - 0.5) * 0.05;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0;
+                if (this.y < 0) this.y = height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        let particlesArray = [];
+        function initParticles() {
+            particlesArray = [];
+            const numberOfParticles = Math.floor((width * height) / 11000);
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new DanceParticle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.onload = function() {
+            initParticles();
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
